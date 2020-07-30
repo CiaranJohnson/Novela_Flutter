@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>501113003637-qs6cbeb8n5v37estlie7chbfr91c2bij.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.501113003637-qs6cbeb8n5v37estlie7chbfr91c2bij</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>501113003637-09589pal30gaqtigpm9q66se3t988or2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDMFn6B90ffTePx8wTvqpa-apC2ctBvD4k</string>
+	<key>GCM_SENDER_ID</key>
+	<string>501113003637</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ciaranjohnson.com.novela</string>
+	<key>PROJECT_ID</key>
+	<string>novela-bbd01</string>
+	<key>STORAGE_BUCKET</key>
+	<string>novela-bbd01.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:501113003637:ios:c49dabda49ce54bc71623c</string>
+	<key>DATABASE_URL</key>
+	<string>https://novela-bbd01.firebaseio.com</string>
+</dict>
+</plist>
