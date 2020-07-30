@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/log_in_screen.dart';
 import 'package:novela/screens/sign_up_screen.dart';
+import 'package:novela/widgets/novela_leaf_logo.dart';
 
 class RegistrationScreen extends StatelessWidget {
   static const String id = 'registration_screen';
@@ -15,69 +16,40 @@ class RegistrationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Expanded(
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(bottom: 70.0),
-                    child: Image(
-                      height: 100.0,
-                      width: 100.0,
-                      image: AssetImage('images/leaf.png'),
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                      child: Text(
-                        'novela',
-                        style: TextStyle(
-                          color: kNovelaGreen,
-                          fontFamily: 'RobotoSlab',
-                          fontSize: 90.0,
-                        ),
+            NovelaLeafLogo(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignUpScreen.id);
+                    },
+                    color: kNovelaGreen,
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        color: kNovelaWhite,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignUpScreen.id);
-                      },
-                      color: kNovelaGreen,
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: kNovelaWhite,
-                        ),
-                      ),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                Expanded(
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, LogInScreen.id);
+                    },
+                    color: kNovelaGreen,
+                    child: Text(
+                      'Log In',
+                      style: TextStyle(color: kNovelaWhite),
                     ),
                   ),
-                  SizedBox(
-                    width: 20.0,
-                  ),
-                  Expanded(
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, LogInScreen.id);
-                      },
-                      color: kNovelaGreen,
-                      child: Text(
-                        'Log In',
-                        style: TextStyle(color: kNovelaWhite),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

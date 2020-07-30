@@ -150,13 +150,45 @@ class BioBox extends StatelessWidget {
               color: kNovelaBlue,
               borderRadius: BorderRadius.circular(20.0),
             ),
-            child: Text(
-              'Bio:',
-              style: TextStyle(
-                color: kNovelaWhite,
-                fontFamily: 'RobotoSlab',
-                fontSize: 16.0,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Bio:',
+                  style: TextStyle(
+                    color: kNovelaWhite,
+                    fontFamily: 'RobotoSlab',
+                    fontSize: 16.0,
+                  ),
+                ),
+                Text(
+                  'I Love the smell of a new Book!',
+                  style: TextStyle(
+                    color: kNovelaWhite,
+                    fontFamily: 'RobotoSlab',
+                    fontSize: 20.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  'Last Read:',
+                  style: TextStyle(
+                    color: kNovelaWhite,
+                    fontFamily: 'RobotoSlab',
+                    fontSize: 14.0,
+                  ),
+                ),
+                Text(
+                  'Murder on the Orient Express',
+                  style: TextStyle(
+                    color: kNovelaWhite,
+                    fontFamily: 'RobotoSlab',
+                    fontSize: 15.0,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -166,8 +198,10 @@ class BioBox extends StatelessWidget {
             height: 150.0,
             width: 100.0,
             decoration: BoxDecoration(
-              color: kNovelaGreen,
               borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Image(
+              image: AssetImage('images/book_cover.png'),
             ),
           ),
         ),
