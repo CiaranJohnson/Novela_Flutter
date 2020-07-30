@@ -29,8 +29,14 @@ class BookshopAppBar extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            ProfilePicture(
-              diameterContainer: 90.0,
+            Padding(
+              padding: EdgeInsets.only(
+                left: 10.0,
+                right: 5.0,
+              ),
+              child: ProfilePicture(
+                diameterContainer: 90.0,
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,

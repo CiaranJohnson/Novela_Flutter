@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:novela/constants.dart';
 
 class ProfileInfoCard extends StatelessWidget {
+  final String cardTitle;
+  final int cardValue;
+  ProfileInfoCard({this.cardTitle, this.cardValue});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +23,7 @@ class ProfileInfoCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Friends',
+            cardTitle,
             style: TextStyle(
               fontFamily: 'RobotoSlab',
               fontSize: 17.0,
@@ -27,7 +31,7 @@ class ProfileInfoCard extends StatelessWidget {
             ),
           ),
           Text(
-            '50',
+            cardValue.toString(),
             style: TextStyle(
               fontFamily: 'RobotoSlab',
               fontSize: 40.0,

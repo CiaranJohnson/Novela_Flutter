@@ -10,55 +10,74 @@ class RegistrationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: kNovelaBlue,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 100.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Container(
-              child: Center(
-                child: Text(
-                  'novela',
-                  style: TextStyle(
-                    color: kNovelaGreen,
-                    fontFamily: 'RobotoSlab',
-                    fontSize: 90.0,
+            Expanded(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(bottom: 70.0),
+                    child: Image(
+                      height: 100.0,
+                      width: 100.0,
+                      image: AssetImage('images/leaf.png'),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, SignUpScreen.id);
-                    },
-                    color: kNovelaGreen,
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: kNovelaWhite,
+                  Container(
+                    child: Center(
+                      child: Text(
+                        'novela',
+                        style: TextStyle(
+                          color: kNovelaGreen,
+                          fontFamily: 'RobotoSlab',
+                          fontSize: 90.0,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Expanded(
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, LogInScreen.id);
-                    },
-                    color: kNovelaGreen,
-                    child: Text(
-                      'Log In',
-                      style: TextStyle(color: kNovelaWhite),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, SignUpScreen.id);
+                      },
+                      color: kNovelaGreen,
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: kNovelaWhite,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Expanded(
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, LogInScreen.id);
+                      },
+                      color: kNovelaGreen,
+                      child: Text(
+                        'Log In',
+                        style: TextStyle(color: kNovelaWhite),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

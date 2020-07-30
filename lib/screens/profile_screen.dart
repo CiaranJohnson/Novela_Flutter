@@ -13,86 +13,112 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: kNovelaWhite,
       body: Container(
-        child: Stack(
-          alignment: Alignment.topCenter,
+        child: Column(
           children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height / 2 + 100,
-              color: kNovelaWhite,
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height / 2,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment
-                      .bottomCenter, // 10% of the width, so there are ten blinds.
-                  colors: [
-                    kNovelaBlue,
-                    kNovelaGreen,
-                  ], // whitish to gray
-                  tileMode: TileMode.repeated,
+            Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height / 2 + 100,
+                  color: kNovelaWhite,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment
+                          .bottomCenter, // 10% of the width, so there are ten blinds.
+                      colors: [
+                        kNovelaBlue,
+                        kNovelaGreen,
+                      ], // whitish to gray
+                      tileMode: TileMode.repeated,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Center(
-                      child: BorderedText(
-                        strokeWidth: 1.0,
-                        strokeColor: kTextBorder,
-                        child: Text(
-                          'novela',
-                          style: TextStyle(
-                            color: kNovelaWhite,
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'RobotoSlab',
+                  child: SafeArea(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(
+                          child: BorderedText(
+                            strokeWidth: 1.0,
+                            strokeColor: kTextBorder,
+                            child: Text(
+                              'novela',
+                              style: TextStyle(
+                                color: kNovelaWhite,
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'RobotoSlab',
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 20,
+                        ),
+                        ProfilePicture(
+                          diameterContainer:
+                              MediaQuery.of(context).size.width / 2,
+                          innerBorder: true,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          'Ciaran Johnson',
+                          style: TextStyle(
+                              color: kNovelaWhite,
+                              fontSize: 30.0,
+                              fontFamily: 'RobotoSlab',
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 20,
-                    ),
-                    ProfilePicture(
-                      diameterContainer: MediaQuery.of(context).size.width / 2,
-                      innerBorder: true,
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(
-                      'Ciaran Johnson',
-                      style: TextStyle(
-                          color: kNovelaWhite,
-                          fontSize: 30.0,
-                          fontFamily: 'RobotoSlab',
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                Positioned(
+                  bottom: 0.0,
+                  child: Container(
+                    height: 150.0,
+                    width: 300.0,
+                    child: Row(
+                      children: <Widget>[
+                        ProfileInfoCard(
+                          cardTitle: 'Friends',
+                          cardValue: 50,
+                        ),
+                        ProfileInfoCard(
+                          cardTitle: 'Books',
+                          cardValue: 16,
+                        ),
+                        ProfileInfoCard(
+                          cardTitle: 'Wishlist',
+                          cardValue: 24,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
-            Positioned(
-              bottom: 0.0,
+            Expanded(
               child: Container(
-                height: 150.0,
-                width: 300.0,
-                child: Row(
+                child: ListView(
+                  padding: EdgeInsets.all(20.0),
                   children: <Widget>[
-                    ProfileInfoCard(),
-                    ProfileInfoCard(),
-                    ProfileInfoCard(),
+                    Container(
+                      child: BioBox(),
+                    )
                   ],
                 ),
               ),
@@ -100,6 +126,52 @@ class ProfileScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class BioBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Container(
+          height: 200.0,
+          width: MediaQuery.of(context).size.width,
+        ),
+        Positioned(
+          left: 40.0,
+          child: Container(
+            padding: EdgeInsets.only(left: 70.0, top: 30.0),
+            height: 200.0,
+            width: MediaQuery.of(context).size.width * 5 / 7,
+            decoration: BoxDecoration(
+              color: kNovelaBlue,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Text(
+              'Bio:',
+              style: TextStyle(
+                color: kNovelaWhite,
+                fontFamily: 'RobotoSlab',
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 0.0,
+          child: Container(
+            height: 150.0,
+            width: 100.0,
+            decoration: BoxDecoration(
+              color: kNovelaGreen,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
