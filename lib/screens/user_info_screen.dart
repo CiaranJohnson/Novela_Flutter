@@ -4,6 +4,7 @@ import 'package:novela/constants.dart';
 import 'package:novela/screens/browse_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
 import 'package:novela/widgets/double_bottom_buttons.dart';
+import 'package:novela/widgets/registration_text_field.dart';
 
 class UserInfoScreen extends StatefulWidget {
   static const String id = 'user_info_screen';
@@ -13,9 +14,29 @@ class UserInfoScreen extends StatefulWidget {
 }
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
-  String _name;
   final _auth = FirebaseAuth.instance;
+  final myDisplayNameController = TextEditingController();
+
+  String _name;
   FirebaseUser _user;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myDisplayNameController.addListener(_getInputText);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    myDisplayNameController.dispose();
+    super.dispose();
+  }
+
+  void _getInputText() {
+    _name = myDisplayNameController.text;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,27 +57,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 ),
               ),
             ),
-            TextField(
-              onChanged: (value) {
-                _name = value;
-              },
-              decoration: InputDecoration(
-                  labelText: 'Name',
-                  labelStyle: TextStyle(
-                    color: kNovelaWhite,
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: kNovelaWhite,
-                      width: 3.0,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: kNovelaWhite,
-                      width: 1.0,
-                    ),
-                  )),
+            RegistrationTextField(
+              hintText: 'Name',
+              controller: myDisplayNameController,
             ),
             DoubleBottomButtons(
               leftText: 'Back',
