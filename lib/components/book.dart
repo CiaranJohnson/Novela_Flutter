@@ -12,12 +12,13 @@ class Book extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.teal,
         borderRadius: BorderRadius.circular(10.0),
+        image:
+            DecorationImage(image: NetworkImage(this.title), fit: BoxFit.cover),
       ),
       margin: EdgeInsets.symmetric(
         horizontal: 10.0,
         vertical: 5.0,
       ),
-      child: Center(child: Text(title)),
     );
   }
 }

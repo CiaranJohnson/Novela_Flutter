@@ -2,8 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:novela/backend/current_user_data.dart';
+import 'package:novela/components/book.dart';
 import 'package:novela/components/bookshop_app_bar.dart';
 import 'package:novela/constants.dart';
+import 'package:novela/screens/registration_screen.dart';
 import '../components/shelf.dart';
 import '../backend/shelf_data.dart';
 
@@ -13,82 +16,61 @@ FirebaseUser loggedInUser;
 class BrowseScreen extends StatefulWidget {
   static const String id = 'browse_screen';
 
-  final FirebaseStorage storage =
-      FirebaseStorage(storageBucket: 'gs://novela-bbd01.appspot.com/');
-
   @override
   _BrowseScreenState createState() => _BrowseScreenState();
 }
 
 class _BrowseScreenState extends State<BrowseScreen> {
   final _auth = FirebaseAuth.instance;
-
-  List<Shelf> shelves = [];
-  List<Container> coverPics = [];
-
+  FirebaseUser user;
+  String _name;
   String imageURL;
   bool gotImage = false;
+
+  List<Shelf> shelves = [
+    Shelf(
+      shelfName: 'Adventure',
+    )
+  ];
+  List<Container> coverPics = [];
 
   @override
   void initState() {
     // TODO: implement initState
     getCurrentUser();
-//    getShelveData();
-    downloadImages();
+    getShelveData();
     super.initState();
   }
 
   void getShelveData() async {
     ShelfData shelfData = ShelfData(firestore: _firestore);
     List<String> genreList = await shelfData.shelvesName();
-    print(genreList);
-
+    List<Shelf> shelfList = [];
+    Map<String, List<Book>> books = {};
     for (String genre in genreList) {
-      List<String> bookList = await shelfData.getShelvesBooks(genre);
-      for (String book in bookList) {
-        if (book == 'Library/BookCover/HarryPotter/chamber_of_secrets.jpg') {
-          setState(() {
-            imageURL = book;
-            gotImage = true;
-          });
-        }
-      }
+      books[genre] = await shelfData.getShelvesBooks(genre);
+      shelfData.getShelvesBooks(genre);
+      shelfList.add(Shelf(
+        shelfName: genre,
+        bookList: books[genre],
+      ));
     }
+
+    setState(() {
+      shelves = shelfList;
+    });
   }
 
   void getCurrentUser() async {
     try {
-      final user = await _auth.currentUser();
+      user = await _auth.currentUser();
       if (user != null) {
-        loggedInUser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void downloadImages() async {
-    print('Start');
-    final StorageReference storageReference = widget.storage
-        .ref()
-        .child('Library')
-        .child('BookCover')
-        .child('Cherub')
-        .child('brigands_mc.jpeg');
-    print('End');
-    try {
-      final String downloadURL = await storageReference.getDownloadURL();
-      if (downloadURL != null) {
-        print('Image not null');
         setState(() {
-          imageURL = downloadURL;
-          gotImage = true;
+          _name = user.displayName;
         });
-      } else {
-        print('null');
       }
     } catch (e) {
-      print(e);
+      Navigator.pushNamed(context, RegistrationScreen.id);
     }
   }
 
@@ -99,18 +81,13 @@ class _BrowseScreenState extends State<BrowseScreen> {
       body: Container(
         child: Column(
           children: <Widget>[
-            BookshopAppBar(),
+            BookshopAppBar(
+              name: _name,
+            ),
             Expanded(
               child: Container(
                 child: ListView(
-                  children: <Widget>[
-                    Container(
-                      child: gotImage
-                          ? Image(image: NetworkImage(imageURL))
-                          : Block(),
-                    ),
-                  ],
-//                  children: shelves,
+                  children: shelves,
                 ),
               ),
             ),

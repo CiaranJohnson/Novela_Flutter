@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:novela/backend/initialise_new_user.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/browse_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
@@ -84,6 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       email: _email, password: _password);
 
                   if (user != null) {
+                    await InitialiseNewUser().initNewUser();
                     print(user.toString());
                     Navigator.pushNamed(context, UserInfoScreen.id);
                   }

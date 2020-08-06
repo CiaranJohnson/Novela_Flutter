@@ -78,15 +78,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   ],
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: SpinKitSquareCircle(
-                    color: showSpin ? kNovelaWhite : kNovelaBlue,
-                    size: 30.0,
-                  ),
-                ),
-              ),
               DoubleBottomButtons(
                 leftText: 'Back',
                 onTapLeft: () {

@@ -3,9 +3,11 @@ import 'package:novela/components/current_user.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/profile_screen.dart';
 import 'package:novela/widgets/profile_picture.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class BookshopAppBar extends StatelessWidget {
-  CurrentUser currentUser = CurrentUser(name: 'Ciaran');
+  final String name;
+  BookshopAppBar({@required this.name});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,6 +30,7 @@ class BookshopAppBar extends StatelessWidget {
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
@@ -56,12 +59,17 @@ class BookshopAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  '${currentUser.name}\'s Bookshop',
-                  style: TextStyle(
-                    color: kNovelaWhite,
-                    fontFamily: 'RobotoSlab',
-                    fontSize: 34.0,
+                Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: AutoSizeText(
+                    '$name\'s Bookshop',
+                    style: TextStyle(
+                      color: kNovelaWhite,
+                      fontFamily: 'RobotoSlab',
+                      fontSize: 31.0,
+                    ),
+                    minFontSize: 12.0,
+                    maxLines: 1,
                   ),
                 ),
               ],

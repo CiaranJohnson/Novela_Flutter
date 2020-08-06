@@ -15,7 +15,7 @@ class NovelaStructure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: BrowseScreen.id,
+      initialRoute: RegistrationScreen.id,
       routes: {
         BrowseScreen.id: (context) => BrowseScreen(),
         LogInScreen.id: (context) => LogInScreen(),
