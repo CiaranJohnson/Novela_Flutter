@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:novela/backend/shelf_data.dart';
+import 'package:novela/components/book.dart';
+import 'package:novela/components/shelf.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/browse_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
@@ -20,15 +24,21 @@ class _LogInScreenState extends State<LogInScreen> {
   final myUsernameController = TextEditingController();
 
   final _auth = FirebaseAuth.instance;
+  final _firestore = Firestore.instance;
 
   String _email;
   String _password;
+
+  List<Shelf> shelves;
+
+  ShelfData shelfData;
 
   @override
   void initState() {
     super.initState();
     myUsernameController.addListener(_getInputText);
     myPasswordController.addListener(_getInputText);
+    shelfData = ShelfData(firestore: _firestore);
   }
 
   @override
@@ -96,7 +106,16 @@ class _LogInScreenState extends State<LogInScreen> {
                       setState(() {
                         showSpin = false;
                       });
+
+                      shelves = await ShelfData(firestore: _firestore)
+                          .getShelvesData();
                       Navigator.pushNamed(context, BrowseScreen.id);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BrowseScreen(shelves: shelves),
+                        ),
+                      );
                     }
                   } catch (e) {
                     print(e);

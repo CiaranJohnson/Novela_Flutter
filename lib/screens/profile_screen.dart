@@ -1,12 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:novela/constants.dart';
+import 'package:novela/screens/registration_screen.dart';
 import 'package:novela/widgets/profile_info_card.dart';
 import 'package:novela/widgets/profile_picture.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static const String id = 'profile_screen';
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  FirebaseUser _user;
+
+  String _name;
+  int friends;
+  int books;
+  int wishlist;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      _user = await _auth.currentUser();
+      if (_user != null) {
+        setState(() {
+          _name = _user.displayName;
+        });
+      }
+    } catch (e) {
+      Navigator.pushNamed(context, RegistrationScreen.id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                           height: 10.0,
                         ),
                         Text(
-                          'Ciaran Johnson',
+                          _name == null ? 'Full Name' : _name,
                           style: TextStyle(
                               color: kNovelaWhite,
                               fontSize: 30.0,
@@ -95,15 +130,15 @@ class ProfileScreen extends StatelessWidget {
                       children: <Widget>[
                         ProfileInfoCard(
                           cardTitle: 'Friends',
-                          cardValue: 50,
+                          cardValue: friends == null ? 0 : friends,
                         ),
                         ProfileInfoCard(
                           cardTitle: 'Books',
-                          cardValue: 16,
+                          cardValue: books == null ? 0 : books,
                         ),
                         ProfileInfoCard(
                           cardTitle: 'Wishlist',
-                          cardValue: 24,
+                          cardValue: wishlist == null ? 0 : wishlist,
                         ),
                       ],
                     ),
@@ -118,13 +153,52 @@ class ProfileScreen extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       child: BioBox(),
-                    )
+                    ),
+                    SignOutButton(
+                      auth: _auth,
+                    ),
                   ],
                 ),
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SignOutButton extends StatelessWidget {
+  FirebaseAuth auth;
+  SignOutButton({this.auth});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
+      child: RaisedButton(
+//        height: 50.0,
+//        width: 150.0,
+//        decoration: BoxDecoration(
+//          borderRadius: BorderRadius.circular(30.0),
+//          color: kNovelaGreen,
+//        ),
+        child: Center(
+          child: Text(
+            'Sign Out',
+            style: TextStyle(
+                color: kNovelaWhite,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        color: kNovelaGreen,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+        onPressed: () async {
+          await auth.signOut();
+          Navigator.pushNamed(context, RegistrationScreen.id);
+        },
       ),
     );
   }

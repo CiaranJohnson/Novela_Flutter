@@ -20,6 +20,7 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   firebase_storage: ^3.1.6
   auto_size_text: ^2.1.0
+  image_picker: ^0.6.7+4
 
 dev_dependencies:
   flutter_test:

@@ -16,6 +16,9 @@ FirebaseUser loggedInUser;
 class BrowseScreen extends StatefulWidget {
   static const String id = 'browse_screen';
 
+  final List<Shelf> shelves;
+  BrowseScreen({@required this.shelves});
+
   @override
   _BrowseScreenState createState() => _BrowseScreenState();
 }
@@ -27,38 +30,11 @@ class _BrowseScreenState extends State<BrowseScreen> {
   String imageURL;
   bool gotImage = false;
 
-  List<Shelf> shelves = [
-    Shelf(
-      shelfName: 'Adventure',
-    )
-  ];
-  List<Container> coverPics = [];
-
   @override
   void initState() {
     // TODO: implement initState
     getCurrentUser();
-    getShelveData();
     super.initState();
-  }
-
-  void getShelveData() async {
-    ShelfData shelfData = ShelfData(firestore: _firestore);
-    List<String> genreList = await shelfData.shelvesName();
-    List<Shelf> shelfList = [];
-    Map<String, List<Book>> books = {};
-    for (String genre in genreList) {
-      books[genre] = await shelfData.getShelvesBooks(genre);
-      shelfData.getShelvesBooks(genre);
-      shelfList.add(Shelf(
-        shelfName: genre,
-        bookList: books[genre],
-      ));
-    }
-
-    setState(() {
-      shelves = shelfList;
-    });
   }
 
   void getCurrentUser() async {
@@ -87,7 +63,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
             Expanded(
               child: Container(
                 child: ListView(
-                  children: shelves,
+                  children: widget.shelves != null ? widget.shelves : [],
                 ),
               ),
             ),

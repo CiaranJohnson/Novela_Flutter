@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:novela/components/shelf.dart';
 import '../components/book.dart';
 
 class ShelfData {
@@ -31,7 +32,6 @@ class ShelfData {
 
   Future<List<Book>> getShelvesBooks(String genre) async {
     List<Book> bookList = [];
-    print('Getting $genre\'s books');
     try {
       QuerySnapshot querySnapshot = await Firestore.instance
           .collection('Library')
@@ -39,16 +39,26 @@ class ShelfData {
           .collection(genre)
           .getDocuments();
       for (DocumentSnapshot ds in querySnapshot.documents) {
-        for (String books in ds.data.values) {
-          String imageURL = 'Library/BookCover/$genre/$books';
-          bookList.add(Book(
-            title: books,
-          ));
-        }
+        bookList.add(
+            Book(title: ds.data['title'], cover_pic: ds.data['cover_pic']));
       }
       return bookList;
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<List<Shelf>> getShelvesData() async {
+    List<String> genreList = await shelvesName();
+    List<Shelf> shelfList = [];
+    Map<String, List<Book>> books = {};
+    for (String genre in genreList) {
+      books[genre] = await getShelvesBooks(genre);
+      shelfList.add(Shelf(
+        shelfName: genre,
+        bookList: books[genre],
+      ));
+    }
+    return shelfList;
   }
 }
