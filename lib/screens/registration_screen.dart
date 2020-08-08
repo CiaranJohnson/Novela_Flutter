@@ -16,7 +16,10 @@ class RegistrationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            NovelaLeafLogo(),
+            Expanded(
+              flex: 3,
+              child: NovelaLeafLogo(),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

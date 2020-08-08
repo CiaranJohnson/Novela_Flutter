@@ -68,7 +68,10 @@ class _LogInScreenState extends State<LogInScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              NovelaLeafLogo(),
+              Expanded(
+                flex: 3,
+                child: NovelaLeafLogo(),
+              ),
               Expanded(
                 flex: 3,
                 child: Column(

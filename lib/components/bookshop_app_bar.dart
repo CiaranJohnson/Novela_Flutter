@@ -7,11 +7,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 class BookshopAppBar extends StatelessWidget {
   final String name;
-  BookshopAppBar({@required this.name});
+  final ImageProvider profilePic;
+  BookshopAppBar({@required this.name, this.profilePic});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileScreen(
+              profilePicURL: profilePic,
+            ),
+          ),
+        );
         Navigator.pushNamed(context, ProfileScreen.id);
       },
       child: Container(
@@ -39,6 +48,7 @@ class BookshopAppBar extends StatelessWidget {
               ),
               child: ProfilePicture(
                 diameterContainer: 90.0,
+                image: profilePic,
               ),
             ),
             Column(

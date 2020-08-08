@@ -61,7 +61,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              NovelaLeafLogo(),
+              Expanded(
+                flex: 3,
+                child: NovelaLeafLogo(),
+              ),
               Expanded(
                 flex: 3,
                 child: Column(
@@ -93,8 +96,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         email: _email, password: _password);
 
                     if (user != null) {
-                      await InitialiseNewUser().initNewUser();
-                      print(user.toString());
                       Navigator.pushNamed(context, UserInfoScreen.id);
                     }
                   } catch (e) {

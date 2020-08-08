@@ -17,7 +17,8 @@ class BrowseScreen extends StatefulWidget {
   static const String id = 'browse_screen';
 
   final List<Shelf> shelves;
-  BrowseScreen({@required this.shelves});
+  final String profilePicURL;
+  BrowseScreen({@required this.shelves, this.profilePicURL});
 
   @override
   _BrowseScreenState createState() => _BrowseScreenState();
@@ -59,6 +60,9 @@ class _BrowseScreenState extends State<BrowseScreen> {
           children: <Widget>[
             BookshopAppBar(
               name: _name,
+              profilePic: widget.profilePicURL != null
+                  ? NetworkImage(widget.profilePicURL)
+                  : AssetImage('images/leaf.png'),
             ),
             Expanded(
               child: Container(
