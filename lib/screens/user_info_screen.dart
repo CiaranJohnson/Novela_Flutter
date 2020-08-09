@@ -145,7 +145,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     shelves =
                         await ShelfData(firestore: _firestore).getShelvesData();
                     if (shelves != null) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => BrowseScreen(

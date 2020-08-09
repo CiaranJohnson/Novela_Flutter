@@ -96,7 +96,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         email: _email, password: _password);
 
                     if (user != null) {
-                      Navigator.pushNamed(context, UserInfoScreen.id);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => UserInfoScreen(),
+                        ),
+                      );
                     }
                   } catch (e) {
                     print(e);

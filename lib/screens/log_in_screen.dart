@@ -111,7 +111,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           await CurrentUserData().getProfilePictureURL();
                       shelves = await ShelfData(firestore: _firestore)
                           .getShelvesData();
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => BrowseScreen(
