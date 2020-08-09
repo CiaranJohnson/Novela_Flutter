@@ -163,7 +163,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
                     shelves =
                         await ShelfData(firestore: _firestore).getShelvesData();
-                    if (shelves != null && _user.displayName != null) {
+                    if (shelves != null) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -173,6 +173,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           ),
                         ),
                       );
+                    } else {
+                      if (shelves == null) {
+                        print('Shelves not loaded');
+                      } else {
+                        print('Display Name is null');
+                      }
                     }
                   }
                 } catch (e) {

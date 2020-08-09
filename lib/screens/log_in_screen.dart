@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:novela/backend/current_user_data.dart';
 import 'package:novela/backend/shelf_data.dart';
 import 'package:novela/components/book.dart';
 import 'package:novela/components/shelf.dart';
@@ -106,17 +107,15 @@ class _LogInScreenState extends State<LogInScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: _email, password: _password);
                     if (user != null) {
-                      setState(() {
-                        showSpin = false;
-                      });
-
+                      await CurrentUserData().getProfilePictureURL();
                       shelves = await ShelfData(firestore: _firestore)
                           .getShelvesData();
-                      Navigator.pushNamed(context, BrowseScreen.id);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BrowseScreen(shelves: shelves),
+                          builder: (context) => BrowseScreen(
+                            shelves: shelves,
+                          ),
                         ),
                       );
                     }

@@ -8,20 +8,25 @@ import 'package:auto_size_text/auto_size_text.dart';
 class BookshopAppBar extends StatelessWidget {
   final String name;
   final ImageProvider profilePic;
+
+  String getFirstName(String fullName) {
+    return fullName.split(" ")[0];
+  }
+
   BookshopAppBar({@required this.name, this.profilePic});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        print("On tap appbar pic: $profilePic");
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ProfileScreen(
-              profilePicURL: profilePic,
+              profilePicProvider: profilePic,
             ),
           ),
         );
-        Navigator.pushNamed(context, ProfileScreen.id);
       },
       child: Container(
         padding: EdgeInsets.only(top: 50.0),
@@ -72,7 +77,7 @@ class BookshopAppBar extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 10.0),
                   child: AutoSizeText(
-                    '$name\'s Bookshop',
+                    '${getFirstName(name)}\'s Bookshop',
                     style: TextStyle(
                       color: kNovelaWhite,
                       fontFamily: 'RobotoSlab',

@@ -9,8 +9,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 class ProfileScreen extends StatefulWidget {
   static const String id = 'profile_screen';
 
-  ImageProvider profilePicURL;
-  ProfileScreen({this.profilePicURL});
+  ImageProvider profilePicProvider;
+  ProfileScreen({this.profilePicProvider});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -108,8 +108,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           diameterContainer:
                               MediaQuery.of(context).size.width / 2,
                           innerBorder: true,
-                          image: widget.profilePicURL != null
-                              ? widget.profilePicURL
+                          image: widget.profilePicProvider != null
+                              ? widget.profilePicProvider
                               : AssetImage('images/leaf.png'),
                         ),
                         SizedBox(

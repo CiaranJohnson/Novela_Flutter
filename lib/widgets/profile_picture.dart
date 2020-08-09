@@ -19,6 +19,13 @@ class ProfilePicture extends StatefulWidget {
 
 class _ProfilePictureState extends State<ProfilePicture> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("Profile Picture: ${widget.image}");
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: widget.diameterContainer,
