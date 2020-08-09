@@ -1,29 +1,55 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:novela/backend/firebase_storage_manager.dart';
 
 class InitialiseNewUser {
-//  initalise friends, books and wishlist to zero
   final _firestore = Firestore.instance;
-  final auth = FirebaseAuth.instance;
-  FirebaseUser user;
+  final _auth = FirebaseAuth.instance;
+  FirebaseUser _user;
 
-  Future initNewUser() async {
-    user = await auth.currentUser();
+  Future createNewUser(String firstName, String lastName, File profilePicFile,
+      FirebaseStorageManager firebaseStorageManager) async {
+    // Add new user info stats to database
+    _user = await _auth.currentUser();
+    UserUpdateInfo userInfo = UserUpdateInfo();
+    userInfo.displayName = "$firstName $lastName";
+    await _user.updateProfile(userInfo);
+    await _user.reload();
+    await _initNewUser();
+
+    // Add Profile Picture to File Storage and download URL to database
+    if (profilePicFile != null) {
+      String _profilePicURL = await firebaseStorageManager.uploadProfilePicFile(
+          profilePicFile, _user);
+      print(_profilePicURL);
+      if (_profilePicURL != null) {
+        _addProfilePicture(_profilePicURL);
+      } else {
+        print('URl is null');
+      }
+    }
+  }
+
+  // Initialise User Stats in Database
+  Future _initNewUser() async {
     Map<String, int> userInfo = {'Friends': 0, 'Books': 0, 'Wishlist': 0};
     _firestore
         .collection('User')
-        .document(user.uid)
+        .document(_user.uid)
         .collection('Info')
         .document('profile_stats')
         .setData(userInfo);
   }
 
-  Future addProfilePicture(String profilePicURL) async {
-    user = await auth.currentUser();
+  // Add Profile Picture URL to database
+  Future _addProfilePicture(String profilePicURL) async {
     Map<String, String> userInfo = {'profile_pic': profilePicURL};
     _firestore
         .collection('User')
-        .document(user.uid)
+        .document(_user.uid)
         .collection('Info')
         .document('profile_pic')
         .setData(userInfo);

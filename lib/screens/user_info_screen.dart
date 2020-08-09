@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:novela/backend/firebase_storage_manager.dart';
 import 'package:novela/backend/initialise_new_user.dart';
@@ -24,8 +22,6 @@ class UserInfoScreen extends StatefulWidget {
 }
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
-  final _auth = FirebaseAuth.instance;
-  FirebaseUser _user;
   String _firstName;
   String _lastName;
 
@@ -144,23 +140,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               onTapRight: () async {
                 try {
                   if (_firstName != null && _firstName.length > 0) {
-                    _user = await _auth.currentUser();
-                    UserUpdateInfo userInfo = UserUpdateInfo();
-                    userInfo.displayName = "$_firstName $_lastName";
-                    await _user.updateProfile(userInfo);
-                    await _user.reload();
-                    await initNewUser.initNewUser();
-                    if (_profilePicFile != null) {
-                      _profilePicURL = await _firebaseStorageManager.uploadFile(
-                          _profilePicFile, _user);
-                      print(_profilePicURL);
-                      if (_profilePicURL != null) {
-                        initNewUser.addProfilePicture(_profilePicURL);
-                      } else {
-                        print('URl is null');
-                      }
-                    }
-
+                    await initNewUser.createNewUser(_firstName, _lastName,
+                        _profilePicFile, _firebaseStorageManager);
                     shelves =
                         await ShelfData(firestore: _firestore).getShelvesData();
                     if (shelves != null) {

@@ -107,7 +107,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: _email, password: _password);
                     if (user != null) {
-                      await CurrentUserData().getProfilePictureURL();
+                      String profilePicURL =
+                          await CurrentUserData().getProfilePictureURL();
                       shelves = await ShelfData(firestore: _firestore)
                           .getShelvesData();
                       Navigator.push(
@@ -115,6 +116,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         MaterialPageRoute(
                           builder: (context) => BrowseScreen(
                             shelves: shelves,
+                            profilePicURL: profilePicURL,
                           ),
                         ),
                       );

@@ -5,9 +5,6 @@ import '../components/book.dart';
 class ShelfData {
   final Firestore firestore;
 
-//  List<String> genreList = [];
-//  Map<String, List<String>> books = {};
-
   ShelfData({this.firestore});
 
   Future<List<String>> shelvesName() async {
@@ -25,10 +22,9 @@ class ShelfData {
       return genreList;
     } catch (e) {
       print(e);
+      return [];
     }
   }
-
-//  List<String> get getShelvesNames => genreList;
 
   Future<List<Book>> getShelvesBooks(String genre) async {
     List<Book> bookList = [];
@@ -39,12 +35,13 @@ class ShelfData {
           .collection(genre)
           .getDocuments();
       for (DocumentSnapshot ds in querySnapshot.documents) {
-        bookList.add(
-            Book(title: ds.data['title'], cover_pic: ds.data['cover_pic']));
+        bookList
+            .add(Book(title: ds.data['title'], coverPic: ds.data['cover_pic']));
       }
       return bookList;
     } catch (e) {
       print(e);
+      return [];
     }
   }
 

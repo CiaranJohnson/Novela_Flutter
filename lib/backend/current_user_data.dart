@@ -30,6 +30,7 @@ class CurrentUserData {
   }
 
   Future getProfilePictureURL() async {
+    String profilePicURL;
     _user = await _auth.currentUser();
     QuerySnapshot snapshot = await _firestore
         .collection('User')
@@ -38,7 +39,10 @@ class CurrentUserData {
         .getDocuments();
 
     for (DocumentSnapshot ds in snapshot.documents) {
-      print(ds.data);
+      if (ds.data.containsKey("profile_pic")) {
+        profilePicURL = ds.data["profile_pic"];
+      }
     }
+    return profilePicURL;
   }
 }
