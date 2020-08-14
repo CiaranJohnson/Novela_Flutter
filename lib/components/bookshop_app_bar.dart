@@ -76,15 +76,17 @@ class BookshopAppBar extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 10.0),
-                  child: AutoSizeText(
-                    '${getFirstName(name)}\'s Bookshop',
-                    style: TextStyle(
-                      color: kNovelaWhite,
-                      fontFamily: 'RobotoSlab',
-                      fontSize: 31.0,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 120,
+                    child: AutoSizeText(
+                      '${getFirstName(name)}\'s Bookshop',
+                      style: TextStyle(
+                        color: kNovelaWhite,
+                        fontFamily: 'RobotoSlab',
+                        fontSize: 31.0,
+                      ),
+                      maxLines: 1,
                     ),
-                    minFontSize: 12.0,
-                    maxLines: 1,
                   ),
                 ),
               ],

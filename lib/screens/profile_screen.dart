@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:novela/backend/current_user_data.dart';
+import 'package:novela/backend/shelf_data.dart';
+import 'package:novela/components/book.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/registration_screen.dart';
+import 'package:novela/screens/wishlist_screen.dart';
 import 'package:novela/widgets/profile_info_card.dart';
 import 'package:novela/widgets/profile_picture.dart';
 import 'package:bordered_text/bordered_text.dart';
@@ -20,11 +24,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   FirebaseUser _user;
+  CurrentUserData _currentUserData;
 
   String _name;
-  int friends;
-  int books;
-  int wishlist;
+  int _friends;
+  int _books;
+  int _wishlist;
 
   @override
   void initState() {
@@ -37,8 +42,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       _user = await _auth.currentUser();
       if (_user != null) {
+        _currentUserData = CurrentUserData();
+        int friends = await _currentUserData.getPersonalInfo("Friends");
+        int wishlist = await _currentUserData.getPersonalInfo("Wishlist");
+        int books = await _currentUserData.getPersonalInfo("Books");
         setState(() {
           _name = _user.displayName;
+          _friends = friends;
+          _wishlist = wishlist;
+          _books = books;
         });
       }
     } catch (e) {
@@ -116,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 10.0,
                         ),
                         Text(
-                          _name == null ? 'Full Name' : _name,
+                          _name == null ? '' : _name,
                           style: TextStyle(
                               color: kNovelaWhite,
                               fontSize: 30.0,
@@ -136,15 +148,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: <Widget>[
                         ProfileInfoCard(
                           cardTitle: 'Friends',
-                          cardValue: friends == null ? 0 : friends,
+                          cardValue: _friends == null ? 0 : _friends,
                         ),
                         ProfileInfoCard(
                           cardTitle: 'Books',
-                          cardValue: books == null ? 0 : books,
+                          cardValue: _books == null ? 0 : _books,
                         ),
-                        ProfileInfoCard(
-                          cardTitle: 'Wishlist',
-                          cardValue: wishlist == null ? 0 : wishlist,
+                        GestureDetector(
+                          onTap: () async {
+                            List<String> wishlistISBN =
+                                await _currentUserData.getWishlist();
+                            List<Book> wishlistBooks =
+                                await ShelfData().getBooks(wishlistISBN);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    WishlistScreen(
+                                  name: _name,
+                                  books: wishlistBooks,
+                                  profilePic: widget.profilePicProvider,
+                                ),
+                              ),
+                            );
+                          },
+                          child: ProfileInfoCard(
+                            cardTitle: 'Wishlist',
+                            cardValue: _wishlist == null ? 0 : _wishlist,
+                          ),
                         ),
                       ],
                     ),

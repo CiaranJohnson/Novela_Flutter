@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:novela/screens/book_info_screen.dart';
 
 class Book extends StatelessWidget {
+  final String isbn;
   final String title;
+  final String author;
   final String coverPic;
+  final double height;
+  final double width;
 
-  Book({@required this.title, @required this.coverPic});
+  Book(
+      {@required this.isbn,
+      @required this.title,
+      @required this.coverPic,
+      this.author,
+      this.height = 150.0,
+      this.width = 100.0});
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +25,17 @@ class Book extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => BookInfoScreen(
+              isbn: isbn,
               title: title,
+              author: author,
               coverPic: coverPic,
             ),
           ),
         );
       },
       child: Container(
-        height: 100.0,
-        width: 100.0,
+        height: height,
+        width: width,
         decoration: BoxDecoration(
           color: Colors.teal,
           borderRadius: BorderRadius.circular(10.0),

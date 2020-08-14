@@ -35,8 +35,10 @@ class ShelfData {
           .collection(genre)
           .getDocuments();
       for (DocumentSnapshot ds in querySnapshot.documents) {
-        bookList
-            .add(Book(title: ds.data['title'], coverPic: ds.data['cover_pic']));
+        bookList.add(Book(
+            title: ds.data['title'],
+            author: ds.data['Author'],
+            coverPic: ds.data['cover_pic']));
       }
       return bookList;
     } catch (e) {
@@ -45,17 +47,86 @@ class ShelfData {
     }
   }
 
+  Future<List<Book>> getBooks(List<String> booksISBN) async {
+    List<Book> bookList = [];
+    try {
+      QuerySnapshot querySnapshot =
+          await Firestore.instance.collection('Library').getDocuments();
+      for (DocumentSnapshot ds in querySnapshot.documents) {
+        if (booksISBN.contains(ds.documentID)) {
+          bookList.add(
+            Book(
+              title: ds.data['title'],
+              author: ds.data['author'],
+              coverPic: ds.data['cover_pic'],
+              isbn: ds.documentID,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return bookList;
+  }
+
+  Future<Shelf> getShelf(String shelfName, List<String> booksISBN) async {
+    Shelf shelf;
+    List<Book> bookList = await getBooks(booksISBN);
+    shelf = Shelf(
+      shelfName: shelfName,
+      bookList: bookList,
+    );
+    return shelf;
+  }
+
+  Future<Map<String, List<String>>> findMyShelves() async {
+    Map<String, List<String>> shelfISBNs = {};
+    try {
+      DocumentSnapshot snapshot = await Firestore.instance
+          .collection('Shelves')
+          .document('global')
+          .get();
+      for (String key in snapshot.data.keys) {
+        List<String> bookISBN = [];
+        QuerySnapshot querySnapshot = await Firestore.instance
+            .collection("Shelves")
+            .document('global')
+            .collection(snapshot.data[key])
+            .getDocuments();
+        for (DocumentSnapshot ds in querySnapshot.documents) {
+          bookISBN.add(ds.documentID);
+        }
+        shelfISBNs[snapshot.data[key]] = bookISBN;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return shelfISBNs;
+  }
+
   Future<List<Shelf>> getShelvesData() async {
-    List<String> genreList = await shelvesName();
+    Map<String, List<String>> generalShelves = await findMyShelves();
     List<Shelf> shelfList = [];
     Map<String, List<Book>> books = {};
-    for (String genre in genreList) {
-      books[genre] = await getShelvesBooks(genre);
-      shelfList.add(Shelf(
-        shelfName: genre,
-        bookList: books[genre],
-      ));
+    for (String shelfName in generalShelves.keys) {
+      Shelf shelf = await getShelf(shelfName, generalShelves[shelfName]);
+      shelfList.add(shelf);
     }
     return shelfList;
   }
+
+//  Future<List<Shelf>> getShelvesData() async {
+//    List<String> genreList = await shelvesName();
+//    List<Shelf> shelfList = [];
+//    Map<String, List<Book>> books = {};
+//    for (String genre in genreList) {
+//      books[genre] = await getShelvesBooks(genre);
+//      shelfList.add(Shelf(
+//        shelfName: genre,
+//        bookList: books[genre],
+//      ));
+//    }
+//    return shelfList;
+//  }
 }

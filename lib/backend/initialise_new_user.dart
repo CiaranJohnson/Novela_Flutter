@@ -10,7 +10,10 @@ class InitialiseNewUser {
   final _auth = FirebaseAuth.instance;
   FirebaseUser _user;
 
-  Future createNewUser(String firstName, String lastName, File profilePicFile,
+  Future<String> createNewUser(
+      String firstName,
+      String lastName,
+      File profilePicFile,
       FirebaseStorageManager firebaseStorageManager) async {
     // Add new user info stats to database
     _user = await _auth.currentUser();
@@ -27,8 +30,10 @@ class InitialiseNewUser {
       print(_profilePicURL);
       if (_profilePicURL != null) {
         _addProfilePicture(_profilePicURL);
+        return _profilePicURL;
       } else {
         print('URl is null');
+        return null;
       }
     }
   }

@@ -140,8 +140,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               onTapRight: () async {
                 try {
                   if (_firstName != null && _firstName.length > 0) {
-                    await initNewUser.createNewUser(_firstName, _lastName,
-                        _profilePicFile, _firebaseStorageManager);
+                    _profilePicURL = await initNewUser.createNewUser(_firstName,
+                        _lastName, _profilePicFile, _firebaseStorageManager);
                     shelves =
                         await ShelfData(firestore: _firestore).getShelvesData();
                     if (shelves != null) {

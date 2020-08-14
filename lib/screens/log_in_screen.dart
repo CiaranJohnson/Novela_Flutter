@@ -109,8 +109,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     if (user != null) {
                       String profilePicURL =
                           await CurrentUserData().getProfilePictureURL();
-                      shelves = await ShelfData(firestore: _firestore)
-                          .getShelvesData();
+                      shelves = await shelfData.getShelvesData();
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
