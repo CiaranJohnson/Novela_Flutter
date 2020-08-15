@@ -13,6 +13,7 @@ import 'package:novela/widgets/novela_leaf_logo.dart';
 import 'package:novela/widgets/profile_picture.dart';
 import 'package:novela/widgets/registration_text_field.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class UserInfoScreen extends StatefulWidget {
   static const String id = 'user_info_screen';
@@ -35,6 +36,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   FileImage profilePic;
   File _profilePicFile;
   String _profilePicURL;
+
+  bool showSpinner = false;
 
   FirebaseStorageManager _firebaseStorageManager = FirebaseStorageManager();
 
@@ -101,73 +104,85 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kNovelaBlue,
-      body: Container(
-        padding: EdgeInsets.all(40.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            NovelaLeafLogo(),
-            GestureDetector(
-              onTap: () {
-                pickImageFromGallery(ImageSource.gallery);
-              },
-              child: showImage(),
-            ),
-            Column(
-              children: <Widget>[
-                RegistrationTextField(
-                  hintText: 'First Name',
-                  controller: myFirstNameController,
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                RegistrationTextField(
-                  hintText: 'Last Name',
-                  controller: myLastNameController,
-                ),
-              ],
-            ),
-            DoubleBottomButtons(
-              leftText: 'Back',
-              onTapLeft: () {
-                Navigator.pushNamed(
-                  context,
-                  RegistrationScreen.id,
-                );
-              },
-              rightText: 'Next',
-              onTapRight: () async {
-                try {
-                  if (_firstName != null && _firstName.length > 0) {
-                    _profilePicURL = await initNewUser.createNewUser(_firstName,
-                        _lastName, _profilePicFile, _firebaseStorageManager);
-                    shelves =
-                        await ShelfData(firestore: _firestore).getShelvesData();
-                    if (shelves != null) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BrowseScreen(
-                            shelves: shelves,
-                            profilePicURL: _profilePicURL,
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Container(
+          padding: EdgeInsets.all(40.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              NovelaLeafLogo(),
+              GestureDetector(
+                onTap: () {
+                  pickImageFromGallery(ImageSource.gallery);
+                },
+                child: showImage(),
+              ),
+              Column(
+                children: <Widget>[
+                  RegistrationTextField(
+                    hintText: 'First Name',
+                    controller: myFirstNameController,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  RegistrationTextField(
+                    hintText: 'Last Name',
+                    controller: myLastNameController,
+                  ),
+                ],
+              ),
+              DoubleBottomButtons(
+                leftText: 'Back',
+                onTapLeft: () {
+                  Navigator.pushNamed(
+                    context,
+                    RegistrationScreen.id,
+                  );
+                },
+                rightText: 'Next',
+                onTapRight: () async {
+                  setState(() {
+                    showSpinner = true;
+                  });
+                  try {
+                    if (_firstName != null && _firstName.length > 0) {
+                      _profilePicURL = await initNewUser.createNewUser(
+                          _firstName,
+                          _lastName,
+                          _profilePicFile,
+                          _firebaseStorageManager);
+                      shelves = await ShelfData(firestore: _firestore)
+                          .getShelvesData();
+                      if (shelves != null) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BrowseScreen(
+                              shelves: shelves,
+                              profilePicURL: _profilePicURL,
+                            ),
                           ),
-                        ),
-                      );
-                    } else {
-                      if (shelves == null) {
-                        print('Shelves not loaded');
+                        );
                       } else {
-                        print('Display Name is null');
+                        if (shelves == null) {
+                          print('Shelves not loaded');
+                        } else {
+                          print('Display Name is null');
+                        }
                       }
                     }
+                  } catch (e) {
+                    print(e);
                   }
-                } catch (e) {
-                  print(e);
-                }
-              },
-            )
-          ],
+                  setState(() {
+                    showSpinner = false;
+                  });
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -11,7 +11,7 @@ import 'package:novela/widgets/novela_leaf_logo.dart';
 import 'package:novela/widgets/registration_text_field.dart';
 import '../widgets/double_bottom_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String id = 'log_in_screen';
@@ -26,6 +26,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
+
+  bool showSpinner = false;
 
   String _email;
   String _password;
@@ -56,76 +58,80 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool showSpin = false;
-
     return Scaffold(
       backgroundColor: kNovelaBlue,
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 30.0,
-            horizontal: 20.0,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: NovelaLeafLogo(),
-              ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  children: <Widget>[
-                    RegistrationTextField(
-                      hintText: 'Email',
-                      controller: myUsernameController,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    RegistrationTextField(
-                      hintText: 'Password',
-                      isObscured: true,
-                      controller: myPasswordController,
-                    ),
-                  ],
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 30.0,
+              horizontal: 20.0,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  flex: 3,
+                  child: NovelaLeafLogo(),
                 ),
-              ),
-              DoubleBottomButtons(
-                leftText: 'Back',
-                onTapLeft: () {
-                  print('Username: $_email, Password: $_password');
-                  Navigator.pushNamed(context, RegistrationScreen.id);
-                },
-                rightText: 'Log In',
-                onTapRight: () async {
-                  setState(() {
-                    showSpin = true;
-                  });
-                  try {
-                    final user = await _auth.signInWithEmailAndPassword(
-                        email: _email, password: _password);
-                    if (user != null) {
-                      String profilePicURL =
-                          await CurrentUserData().getProfilePictureURL();
-                      shelves = await shelfData.getShelvesData();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BrowseScreen(
-                            shelves: shelves,
-                            profilePicURL: profilePicURL,
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: <Widget>[
+                      RegistrationTextField(
+                        hintText: 'Email',
+                        controller: myUsernameController,
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      RegistrationTextField(
+                        hintText: 'Password',
+                        isObscured: true,
+                        controller: myPasswordController,
+                      ),
+                    ],
+                  ),
+                ),
+                DoubleBottomButtons(
+                  leftText: 'Back',
+                  onTapLeft: () {
+                    print('Username: $_email, Password: $_password');
+                    Navigator.pushNamed(context, RegistrationScreen.id);
+                  },
+                  rightText: 'Log In',
+                  onTapRight: () async {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                          email: _email, password: _password);
+                      if (user != null) {
+                        String profilePicURL =
+                            await CurrentUserData().getProfilePictureURL();
+                        shelves = await shelfData.getShelvesData();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BrowseScreen(
+                              shelves: shelves,
+                              profilePicURL: profilePicURL,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
+                    } catch (e) {
+                      print(e);
                     }
-                  } catch (e) {
-                    print(e);
-                  }
-                },
-              ),
-            ],
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

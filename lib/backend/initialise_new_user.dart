@@ -16,12 +16,14 @@ class InitialiseNewUser {
       File profilePicFile,
       FirebaseStorageManager firebaseStorageManager) async {
     // Add new user info stats to database
+    String fullName = "$firstName $lastName";
     _user = await _auth.currentUser();
     UserUpdateInfo userInfo = UserUpdateInfo();
-    userInfo.displayName = "$firstName $lastName";
+    userInfo.displayName = fullName;
     await _user.updateProfile(userInfo);
     await _user.reload();
     await _initNewUser();
+    await _addUsersIdentifiers(fullName);
 
     // Add Profile Picture to File Storage and download URL to database
     if (profilePicFile != null) {
@@ -47,6 +49,13 @@ class InitialiseNewUser {
         .collection('Info')
         .document('profile_stats')
         .setData(userInfo);
+  }
+
+  Future _addUsersIdentifiers(String fullName) async {
+    await _firestore
+        .collection('User')
+        .document(_user.uid)
+        .setData({'username': fullName, 'email': _user.email});
   }
 
   // Add Profile Picture URL to database

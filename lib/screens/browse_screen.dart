@@ -77,14 +77,3 @@ class _BrowseScreenState extends State<BrowseScreen> {
     );
   }
 }
-
-class Block extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: kNovelaBlue,
-      height: 100.0,
-      width: 100.0,
-    );
-  }
-}

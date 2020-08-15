@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:novela/screens/browse_screen.dart';
+import 'package:novela/screens/friend_screen.dart';
 import 'package:novela/screens/log_in_screen.dart';
 import 'package:novela/screens/profile_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
@@ -26,6 +27,7 @@ class NovelaStructure extends StatelessWidget {
         ProfileScreen.id: (context) => ProfileScreen(),
         UserInfoScreen.id: (context) => UserInfoScreen(),
         WishlistScreen.id: (context) => WishlistScreen(),
+        FriendScreen.id: (context) => FriendScreen(),
       },
     );
   }

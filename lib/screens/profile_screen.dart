@@ -3,6 +3,7 @@ import 'package:novela/backend/current_user_data.dart';
 import 'package:novela/backend/shelf_data.dart';
 import 'package:novela/components/book.dart';
 import 'package:novela/constants.dart';
+import 'package:novela/screens/friend_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
 import 'package:novela/screens/wishlist_screen.dart';
 import 'package:novela/widgets/profile_info_card.dart';
@@ -146,13 +147,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 300.0,
                     child: Row(
                       children: <Widget>[
-                        ProfileInfoCard(
-                          cardTitle: 'Friends',
-                          cardValue: _friends == null ? 0 : _friends,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      FriendScreen(
+                                    profilePic: widget.profilePicProvider,
+                                  ),
+                                ));
+                          },
+                          child: ProfileInfoCard(
+                            cardTitle: 'Friends',
+                            cardValue:
+                                _friends == null ? "-" : _friends.toString(),
+                          ),
                         ),
                         ProfileInfoCard(
                           cardTitle: 'Books',
-                          cardValue: _books == null ? 0 : _books,
+                          cardValue: _books == null ? "-" : _books.toString(),
                         ),
                         GestureDetector(
                           onTap: () async {
@@ -174,7 +188,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                           child: ProfileInfoCard(
                             cardTitle: 'Wishlist',
-                            cardValue: _wishlist == null ? 0 : _wishlist,
+                            cardValue:
+                                _wishlist == null ? "-" : _wishlist.toString(),
                           ),
                         ),
                       ],

@@ -45,9 +45,6 @@ class RegistrationScreen extends StatelessWidget {
                 Expanded(
                   child: RaisedButton(
                     onPressed: () async {
-                      Firestore _firestore = Firestore.instance;
-                      await ShelfData(firestore: _firestore).findMyShelves();
-//                      await ShelfData(firestore: _firestore).getBookData();
                       Navigator.pushNamed(context, LogInScreen.id);
                     },
                     color: kNovelaGreen,
