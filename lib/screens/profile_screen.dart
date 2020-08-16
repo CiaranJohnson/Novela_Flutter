@@ -99,20 +99,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Center(
-                          child: BorderedText(
-                            strokeWidth: 1.0,
-                            strokeColor: kTextBorder,
-                            child: Text(
-                              'novela',
-                              style: TextStyle(
-                                color: kNovelaWhite,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'RobotoSlab',
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 10,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 60.0),
+                                child: BorderedText(
+                                  strokeWidth: 1.0,
+                                  strokeColor: kTextBorder,
+                                  child: Text(
+                                    'novela',
+                                    style: TextStyle(
+                                      color: kNovelaWhite,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'RobotoSlab',
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                right: 20.0,
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  print('Edit Profile');
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: kNovelaGreen,
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: kNovelaWhite,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 20,
@@ -203,8 +229,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ListView(
                   padding: EdgeInsets.all(20.0),
                   children: <Widget>[
-                    Container(
-                      child: BioBox(),
+                    GestureDetector(
+                      // pressing this should make an animation which
+                      // enlarges the bio box to take up the majority
+                      // of the screen so info can be added
+                      onTap: () {
+                        print('Edit Bio');
+                      },
+                      child: Container(
+                        child: BioBox(),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 60.0, vertical: 20.0),
+                      child: RaisedButton(
+                        child: Center(
+                          child: Text(
+                            'Edit Profile',
+                            style: TextStyle(
+                                color: kNovelaWhite,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        color: kNovelaGreen,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        onPressed: () {},
+                      ),
                     ),
                     SignOutButton(
                       auth: _auth,
@@ -228,12 +282,6 @@ class SignOutButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 20.0),
       child: RaisedButton(
-//        height: 50.0,
-//        width: 150.0,
-//        decoration: BoxDecoration(
-//          borderRadius: BorderRadius.circular(30.0),
-//          color: kNovelaGreen,
-//        ),
         child: Center(
           child: Text(
             'Sign Out',
@@ -243,7 +291,7 @@ class SignOutButton extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        color: kNovelaGreen,
+        color: kNovelaBlue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
         ),
@@ -257,6 +305,11 @@ class SignOutButton extends StatelessWidget {
 }
 
 class BioBox extends StatelessWidget {
+  ImageProvider lastReadCover;
+  String bioText;
+  String lastReadTitle;
+
+  BioBox({this.bioText, this.lastReadCover, this.lastReadTitle});
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -288,7 +341,7 @@ class BioBox extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'I Love the smell of a new Book!',
+                  bioText == null ? '- Click to add info -' : bioText,
                   style: TextStyle(
                     color: kNovelaWhite,
                     fontFamily: 'RobotoSlab',
@@ -307,7 +360,7 @@ class BioBox extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Murder on the Orient Express',
+                  lastReadTitle == null ? 'Add Book Title' : lastReadTitle,
                   style: TextStyle(
                     color: kNovelaWhite,
                     fontFamily: 'RobotoSlab',
@@ -325,13 +378,21 @@ class BioBox extends StatelessWidget {
             width: 100.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
+              color: kNovelaGreen,
             ),
-            child: Image(
-              image: AssetImage('images/book_cover.png'),
-            ),
+            child: lastReadCover == null
+                ? Icon(
+                    Icons.add_box,
+                    size: 40.0,
+                  )
+                : Image(
+                    image: AssetImage('images/book_cover.png'),
+                  ),
           ),
         ),
       ],
     );
   }
 }
+
+// REFACTOR THIS PAGE ASAP

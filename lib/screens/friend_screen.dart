@@ -15,6 +15,7 @@ class FriendScreen extends StatefulWidget {
 }
 
 class _FriendScreenState extends State<FriendScreen> {
+  final friendSearchController = TextEditingController();
   String friendImage;
   String friendName;
 
@@ -23,6 +24,20 @@ class _FriendScreenState extends State<FriendScreen> {
     // TODO: implement initState
     super.initState();
     getFriends();
+    friendSearchController.addListener(_getInputText);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    friendSearchController.dispose();
+    super.dispose();
+  }
+
+  void _getInputText() {
+    setState(() {
+      friendName = friendSearchController.text;
+    });
   }
 
   void getFriends() async {
@@ -104,6 +119,15 @@ class _FriendScreenState extends State<FriendScreen> {
             ),
           ),
           Container(
+            child: Text(
+              friendName,
+              style: TextStyle(
+                color: kNovelaGreen,
+                fontSize: 30.0,
+              ),
+            ),
+          ),
+          Container(
             height: 150.0,
             width: 100.0,
             decoration: BoxDecoration(
@@ -121,30 +145,53 @@ class _FriendScreenState extends State<FriendScreen> {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0),
-            child: TextField(
-              onChanged: (value) => friendName = value,
-              cursorColor: kNovelaWhite,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: kNovelaWhite),
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: kNovelaGreen,
-                    width: 5.0,
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    controller: friendSearchController,
+                    cursorColor: kNovelaGreen,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: kNovelaGreen,
+                    ),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: kNovelaGreen,
+                          width: 5.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: kNovelaGreen,
+                          width: 3.0,
+                        ),
+                      ),
+                      labelText: 'Find Friends...',
+                      labelStyle: TextStyle(color: kNovelaBlue),
+                    ),
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      print(friendName);
+                    },
                     color: kNovelaGreen,
-                    width: 3.0,
+                    child: Text(
+                      'Search',
+                      style: TextStyle(
+                        color: kNovelaWhite,
+                      ),
+                    ),
                   ),
-                ),
-                labelText: 'Find Friends...',
-                labelStyle: TextStyle(color: kNovelaBlue),
-              ),
+                )
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
