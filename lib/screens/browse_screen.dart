@@ -10,6 +10,7 @@ import 'package:novela/screens/registration_screen.dart';
 import '../components/shelf.dart';
 import '../backend/shelf_data.dart';
 
+
 final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 
@@ -47,6 +48,22 @@ class _BrowseScreenState extends State<BrowseScreen> {
         });
       }
     } catch (e) {
+      Navigator.pushNamed(context, RegistrationScreen.id);
+    }
+  }
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseUser user;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void getCurrentUser() async {
+    user = await auth.currentUser();
+    if (user == null) {
       Navigator.pushNamed(context, RegistrationScreen.id);
     }
   }

@@ -101,6 +101,24 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myDisplayNameController.addListener(_getInputText);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    myDisplayNameController.dispose();
+    super.dispose();
+  }
+
+  void _getInputText() {
+    _name = myDisplayNameController.text;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kNovelaBlue,
