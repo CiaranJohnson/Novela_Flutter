@@ -3,9 +3,9 @@ import 'book.dart';
 
 class Shelf extends StatelessWidget {
   final String shelfName;
-  List<Book> bookList = [Book(title: 'Hello'), Book(title: 'Get')];
+  final List<Book> bookList;
 
-  Shelf({this.shelfName});
+  Shelf({this.shelfName, this.bookList});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class Shelf extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Container(
               margin: EdgeInsets.only(
-                left: 35.0,
+                left: 20.0,
                 top: 10.0,
                 right: 25.0,
                 bottom: 10.0,

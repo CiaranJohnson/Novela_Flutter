@@ -3,7 +3,7 @@ import 'package:novela/constants.dart';
 
 class ProfileInfoCard extends StatelessWidget {
   final String cardTitle;
-  final int cardValue;
+  final String cardValue;
   ProfileInfoCard({this.cardTitle, this.cardValue});
 
   @override

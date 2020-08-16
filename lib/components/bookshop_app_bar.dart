@@ -3,14 +3,30 @@ import 'package:novela/components/current_user.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/profile_screen.dart';
 import 'package:novela/widgets/profile_picture.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class BookshopAppBar extends StatelessWidget {
-  CurrentUser currentUser = CurrentUser(name: 'Ciaran');
+  final String name;
+  final ImageProvider profilePic;
+
+  String getFirstName(String fullName) {
+    return fullName.split(" ")[0];
+  }
+
+  BookshopAppBar({@required this.name, this.profilePic});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProfileScreen.id);
+        print("On tap appbar pic: $profilePic");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileScreen(
+              profilePicProvider: profilePic,
+            ),
+          ),
+        );
       },
       child: Container(
         padding: EdgeInsets.only(top: 50.0),
@@ -28,6 +44,7 @@ class BookshopAppBar extends StatelessWidget {
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
@@ -36,6 +53,7 @@ class BookshopAppBar extends StatelessWidget {
               ),
               child: ProfilePicture(
                 diameterContainer: 90.0,
+                image: profilePic,
               ),
             ),
             Column(
@@ -56,12 +74,19 @@ class BookshopAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  '${currentUser.name}\'s Bookshop',
-                  style: TextStyle(
-                    color: kNovelaWhite,
-                    fontFamily: 'RobotoSlab',
-                    fontSize: 34.0,
+                Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 120,
+                    child: AutoSizeText(
+                      '${getFirstName(name)}\'s Bookshop',
+                      style: TextStyle(
+                        color: kNovelaWhite,
+                        fontFamily: 'RobotoSlab',
+                        fontSize: 31.0,
+                      ),
+                      maxLines: 1,
+                    ),
                   ),
                 ),
               ],

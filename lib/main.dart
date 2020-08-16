@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:novela/screens/browse_screen.dart';
+import 'package:novela/screens/friend_screen.dart';
 import 'package:novela/screens/log_in_screen.dart';
 import 'package:novela/screens/profile_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
 import 'package:novela/screens/sign_up_screen.dart';
 import 'package:novela/screens/splash_screen.dart';
 import 'package:novela/screens/user_info_screen.dart';
+import 'package:novela/screens/wishlist_screen.dart';
 
 void main() {
   runApp(NovelaStructure());
@@ -24,6 +26,8 @@ class NovelaStructure extends StatelessWidget {
         SplashScreen.id: (context) => SplashScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),
         UserInfoScreen.id: (context) => UserInfoScreen(),
+        WishlistScreen.id: (context) => WishlistScreen(),
+        FriendScreen.id: (context) => FriendScreen(),
       },
     );
   }
