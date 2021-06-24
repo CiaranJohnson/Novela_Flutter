@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:novela/backend/shelf_data.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/log_in_screen.dart';
 import 'package:novela/screens/sign_up_screen.dart';

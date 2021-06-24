@@ -145,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         ProfilePicture(
                           diameterContainer:
-                              MediaQuery.of(context).size.width / 2,
+                              MediaQuery.of(context).size.width / 3,
                           innerBorder: true,
                           image: widget.profilePicProvider != null
                               ? widget.profilePicProvider
@@ -226,44 +226,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Expanded(
               child: Container(
-                child: ListView(
-                  padding: EdgeInsets.all(20.0),
-                  children: <Widget>[
-                    GestureDetector(
-                      // pressing this should make an animation which
-                      // enlarges the bio box to take up the majority
-                      // of the screen so info can be added
-                      onTap: () {
-                        print('Edit Bio');
-                      },
-                      child: Container(
-                        child: BioBox(),
+                child: Scrollbar(
+                  child: ListView(
+                    padding: EdgeInsets.all(20.0),
+                    children: <Widget>[
+                      GestureDetector(
+                        // pressing this should make an animation which
+                        // enlarges the bio box to take up the majority
+                        // of the screen so info can be added
+                        onTap: () {
+                          print('Edit Bio');
+                        },
+                        child: Container(
+                          child: BioBox(),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 60.0, vertical: 20.0),
-                      child: RaisedButton(
-                        child: Center(
-                          child: Text(
-                            'Edit Profile',
-                            style: TextStyle(
-                                color: kNovelaWhite,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 60.0, vertical: 20.0),
+                        child: RaisedButton(
+                          child: Center(
+                            child: Text(
+                              'Edit Profile',
+                              style: TextStyle(
+                                  color: kNovelaWhite,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
+                          color: kNovelaGreen,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          onPressed: () {},
                         ),
-                        color: kNovelaGreen,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        onPressed: () {},
                       ),
-                    ),
-                    SignOutButton(
-                      auth: _auth,
-                    ),
-                  ],
+                      SignOutButton(
+                        auth: _auth,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )

@@ -42,7 +42,7 @@ packages:
       name: bordered_text
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   charcode:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: firebase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.0"
+    version: "7.3.3"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -138,7 +138,7 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.8"
+    version: "1.0.11"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -183,14 +183,14 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.7+4"
+    version: "0.6.7+22"
   image_picker_platform_interface:
     dependency: transitive
     description:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.6"
   js:
     dependency: transitive
     description:
@@ -246,7 +246,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   quiver:
     dependency: transitive
     description:

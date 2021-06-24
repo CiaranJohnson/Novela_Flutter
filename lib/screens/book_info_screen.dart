@@ -32,6 +32,7 @@ class BookInfoScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
                         child: Book(
+                          isbn: isbn,
                           title: title,
                           coverPic: coverPic,
                           height: 150.0,

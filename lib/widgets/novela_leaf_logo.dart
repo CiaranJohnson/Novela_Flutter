@@ -22,7 +22,7 @@ class NovelaLeafLogo extends StatelessWidget {
               style: TextStyle(
                 color: kNovelaGreen,
                 fontFamily: 'RobotoSlab',
-                fontSize: 90.0,
+                fontSize: 70.0,
               ),
             ),
           ),

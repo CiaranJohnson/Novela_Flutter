@@ -149,8 +149,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
           ),
           Expanded(
             child: Container(
-              child: ListView(
-                children: getRows(widget.books),
+              child: Scrollbar(
+                child: ListView(
+                  children: getRows(widget.books),
+                ),
               ),
 //              child: ListView(
 //                children: books,

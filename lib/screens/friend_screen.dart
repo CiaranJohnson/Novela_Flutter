@@ -1,9 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:novela/backend/friends_backend.dart';
-import 'package:novela/components/book.dart';
 import 'package:novela/constants.dart';
+import 'package:novela/screens/profile_screen.dart';
 import 'package:novela/widgets/profile_picture.dart';
-import 'package:novela/widgets/registration_text_field.dart';
 
 class FriendScreen extends StatefulWidget {
   static const String id = "friend_screen";
@@ -118,79 +118,107 @@ class _FriendScreenState extends State<FriendScreen> {
               ],
             ),
           ),
-          Container(
-            child: Text(
-              friendName,
-              style: TextStyle(
-                color: kNovelaGreen,
-                fontSize: 30.0,
-              ),
-            ),
+          SizedBox(
+            height: 10.0,
           ),
           Container(
-            height: 150.0,
-            width: 100.0,
-            decoration: BoxDecoration(
-              color: Colors.teal,
-              borderRadius: BorderRadius.circular(10.0),
-              image: DecorationImage(
-                  image: friendImage == null
-                      ? AssetImage('images/leaf.png')
-                      : NetworkImage(friendImage),
-                  fit: BoxFit.cover),
-            ),
-            margin: EdgeInsets.symmetric(
-              horizontal: 10.0,
-              vertical: 5.0,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
             child: Row(
               children: <Widget>[
+                SizedBox(
+                  width: 10.0,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    ProfileScreen.id,
+                  ),
+                  child: CircleAvatar(
+                    child: Platform.isIOS
+                        ? Icon(
+                            Icons.arrow_back_ios,
+                            color: kNovelaBlue,
+                          )
+                        : Icon(
+                            Icons.arrow_back,
+                            color: kNovelaBlue,
+                          ),
+                    backgroundColor: Color(0xFFE5E6E4),
+                    radius: 20.0,
+                  ),
+                ),
                 Expanded(
-                  child: TextField(
-                    controller: friendSearchController,
-                    cursorColor: kNovelaGreen,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: kNovelaGreen,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.0,
+                      vertical: 5.0,
                     ),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: kNovelaGreen,
-                          width: 5.0,
-                        ),
+                    child: TextField(
+                      controller: friendSearchController,
+                      cursorColor: kNovelaGreen,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: kNovelaGreen,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: kNovelaGreen,
-                          width: 3.0,
+                      decoration: InputDecoration(
+                        fillColor: Color(0xFFE5E6E4),
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: BorderSide(
+                            color: Color(0xFFE5E6E4),
+                            width: 5.0,
+                          ),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFFE5E6E4),
+                              width: 3.0,
+                            )),
+                        labelText: 'Find Friends...',
+                        labelStyle: TextStyle(color: kNovelaBlue),
                       ),
-                      labelText: 'Find Friends...',
-                      labelStyle: TextStyle(color: kNovelaBlue),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      print(friendName);
-                    },
-                    color: kNovelaGreen,
-                    child: Text(
-                      'Search',
-                      style: TextStyle(
-                        color: kNovelaWhite,
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
+          ),
+          Divider(),
+          Expanded(
+            child: Scrollbar(
+              child: ListView(
+                children: <Widget>[
+                  FriendCard(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FriendCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 15.0,
+          ),
+          ProfilePicture(
+            diameterContainer: 70.0,
+            image: AssetImage('images/dog_pic.JPG'),
+          ),
+          SizedBox(
+            width: 15.0,
+          ),
+          Text(
+            'Ciaran Johnson',
+            style: TextStyle(fontSize: 30.0, color: kPictureBorder),
           )
         ],
       ),

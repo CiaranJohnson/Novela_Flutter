@@ -36,6 +36,7 @@ class ShelfData {
           .getDocuments();
       for (DocumentSnapshot ds in querySnapshot.documents) {
         bookList.add(Book(
+            isbn: ds.documentID,
             title: ds.data['title'],
             author: ds.data['Author'],
             coverPic: ds.data['cover_pic']));

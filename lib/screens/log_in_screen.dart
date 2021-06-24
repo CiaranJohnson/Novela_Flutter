@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:novela/backend/current_user_data.dart';
 import 'package:novela/backend/shelf_data.dart';
-import 'package:novela/components/book.dart';
 import 'package:novela/components/shelf.dart';
 import 'package:novela/constants.dart';
 import 'package:novela/screens/browse_screen.dart';
+import 'package:novela/screens/home_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
 import 'package:novela/widgets/novela_leaf_logo.dart';
 import 'package:novela/widgets/registration_text_field.dart';
@@ -84,7 +84,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         controller: myUsernameController,
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: 10.0,
                       ),
                       RegistrationTextField(
                         hintText: 'Password',

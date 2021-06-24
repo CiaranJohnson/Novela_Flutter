@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:novela/screens/browse_screen.dart';
 import 'package:novela/screens/friend_screen.dart';
+import 'package:novela/screens/home_screen.dart';
 import 'package:novela/screens/log_in_screen.dart';
 import 'package:novela/screens/profile_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
@@ -17,8 +18,9 @@ class NovelaStructure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: RegistrationScreen.id,
+      initialRoute: HomeScreen.id,
       routes: {
+        HomeScreen.id: (context) => HomeScreen(),
         BrowseScreen.id: (context) => BrowseScreen(),
         LogInScreen.id: (context) => LogInScreen(),
         SignUpScreen.id: (context) => SignUpScreen(),

@@ -1,10 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:novela/backend/initialise_new_user.dart';
-import 'package:novela/backend/shelf_data.dart';
-import 'package:novela/components/shelf.dart';
 import 'package:novela/constants.dart';
-import 'package:novela/screens/browse_screen.dart';
 import 'package:novela/screens/registration_screen.dart';
 import 'package:novela/screens/user_info_screen.dart';
 import 'package:novela/widgets/double_bottom_buttons.dart';

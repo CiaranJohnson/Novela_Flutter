@@ -15,35 +15,37 @@ class DoubleBottomButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Expanded(
-          child: RaisedButton(
-            onPressed: onTapLeft,
-            color: kNovelaGreen,
-            child: Text(
-              this.leftText,
-              style: TextStyle(
-                color: kNovelaWhite,
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: RaisedButton(
+              onPressed: onTapLeft,
+              color: kNovelaGreen,
+              child: Text(
+                this.leftText,
+                style: TextStyle(
+                  color: kNovelaWhite,
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 20.0,
-        ),
-        Expanded(
-          child: RaisedButton(
-            onPressed: onTapRight,
-            color: kNovelaGreen,
-            child: Text(
-              this.rightText,
-              style: TextStyle(color: kNovelaWhite),
+          SizedBox(
+            width: 20.0,
+          ),
+          Expanded(
+            child: RaisedButton(
+              onPressed: onTapRight,
+              color: kNovelaGreen,
+              child: Text(
+                this.rightText,
+                style: TextStyle(color: kNovelaWhite),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
